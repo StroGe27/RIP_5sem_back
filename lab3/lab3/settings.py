@@ -37,13 +37,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # DRF
+    'drf_yasg',
     'rest_framework',
-
     # Наше приложение
     'api',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ]
+}
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,7 +100,7 @@ WSGI_APPLICATION = 'lab3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'test',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -116,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'api.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

@@ -1,6 +1,6 @@
 from api.models import Orders
 from api.models import Requests
-from api.models import Users
+from api.models import CustomUser
 from rest_framework import serializers
 
 class RequestSerializer(serializers.ModelSerializer):
@@ -19,9 +19,29 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "status", "processor", "ghz", "ram", "ip", "processor_type_id", "availableos", "cost", "img"]
 
 class UserSerializer(serializers.ModelSerializer):
+    is_staff = serializers.BooleanField(default=False, required=False)
+    is_superuser = serializers.BooleanField(default=False, required=False)
     class Meta:
-        # Модель, которую мы сериализуем
-        model = Users
-        # Поля, которые мы сериализуем
-        fields = ["id", "name", "mail", "password", "role"]
+        model = CustomUser
+        fields = ['email',
+                  'password',
+                  'full_name',
+                  'phone_number',
+                  'is_staff',
+                  'is_superuser']
+
+# from collections import OrderedDict
+# class OrdersSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         # Модель, которую мы сериализуем
+#         model = Orders
+#         # Поля, которые мы сериализуем
+#         fields = ["id", "title", "status", "processor", "ghz", "ram", "ip", "processor_type_id", "availableos", "cost", "img"]
+
+#         def get_fields(self):
+#             new_fields = OrderedDict()
+#             for name, field in super().get_fields().items():
+#                 field.required = False
+#                 new_fields[name] = field
+#             return new_fields 
 
